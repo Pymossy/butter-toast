@@ -11,7 +11,7 @@ const onClick = action('onClick callback:');
 
 const chooseIcon = () => sample([ 'trash', 'pencil', 'info', 'times', 'warning', 'check', 'phone', 'bolt', 'circle-thin', 'ellipsis-h', 'wifi' ]);
 
-export function start({ kind, sticky = true, scheme, icon, dismissible = true } = {}) {
+export function start({ kind, sticky = false, scheme, icon, dismissible = true } = {}) {
     let interval;
     intervals.forEach(clearInterval);
     intervals.length = 0;
@@ -67,5 +67,5 @@ export function start({ kind, sticky = true, scheme, icon, dismissible = true } 
 }
 
 export const dismissAll = () => {
-    window.dispatchEvent(new CustomEvent('ButterToast', {detail:{ dismiss: 'all' }}));
+    window.dispatchEvent(new CustomEvent('ButterToast', {detail:{ dismissBy: 'all' }}));
 };

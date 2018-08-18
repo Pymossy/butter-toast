@@ -1,4 +1,4 @@
-# Butter Toast
+# ![ButterToast](assets/logo_s.png) Butter Toast
 
 ![ButterToast](assets/crisp-blue.gif)
 
@@ -6,10 +6,35 @@ Butter Toast is a toast notification system for React apps that puts an emphasis
 
 Butter Toast comes with a few built-in styles which you can apply, and you can also use any component for creating the notifications.
 
+## Terminology:
+* **Toast**: A single notification in the stack.
+* **Tray**: The containing element of a stack of toasts.
+* **Raise**: The action of showing a toast of the screen
+* **Dismiss**: The action of removing a toast from the screen
+
+# Content
+* [Feature list](https://github.com/ealush/butter-toast/tree/v2#feaatures)
+* [How to install](https://github.com/ealush/butter-toast/tree/v2#installation)
+* [How to use](https://github.com/ealush/butter-toast/tree/v2#usage)
+    * [Creating a tray](https://github.com/ealush/butter-toast/tree/v2#creating-a-notification-tray)
+        * [ButterToast Props](https://github.com/ealush/butter-toast/tree/v2#buttertoast-props)
+        * [Positioning the tray on the screen](https://github.com/ealush/butter-toast/tree/v2#positioning-the-tray)
+    * [Emitting a toast](https://github.com/ealush/butter-toast/tree/v2#raising-emitting-a-toast)
+        * [Raise params](https://github.com/ealush/butter-toast/tree/v2#raise-params)
+        * [Toast props](https://github.com/ealush/butter-toast/tree/v2#toasts-content-props)
+        * [Custom dismiss and onClick](https://github.com/ealush/butter-toast/tree/v2#using-the-custom-dismiss-and-onclick-handlers)
+        * [How to access the raise method](https://github.com/ealush/butter-toast/tree/v2#accessing-raise)
+    * [Dismissing a toast](https://github.com/ealush/butter-toast/tree/v2#dismissing-toasts)
+* [Using the built in styles (Cinnamon)](https://github.com/ealush/butter-toast/tree/v2#using-the-built-in-styles-sprinkle-some-cinnamon-on-top)
+    * [Crisp](https://github.com/ealush/butter-toast/tree/v2#crisp)
+    * [Crunch](https://github.com/ealush/butter-toast/tree/v2#crunch)
+    * [Slim](https://github.com/ealush/butter-toast/tree/v2#slim)
+
 ## V3 update
 V3 is a near-complete re-write of butter-toast. It brings with it a better api and more stability.
 
 ## Feaatures
+* Any component can be a toast. You can use whatever you like.
 * Rendering the toast-notifications globally right under body to prevent stacking-context collision.
 * Rendering the toast notifications in-context, for positioning relative to parent component.
 * Multiple notification tray support, they can be namespaced for separate controls.
@@ -26,10 +51,6 @@ V3 is a near-complete re-write of butter-toast. It brings with it a better api a
 ```
 npm install --save butter-toast
 ```
-
-## Terminology:
-* **Toast**: A single notification in the stack.
-* **Tray**: The containing element of a stack of toasts.
 
 # Usage
 
@@ -112,7 +133,7 @@ class MyComponent extends Component {
 }
 ```
 
-## Emitting a toast
+## Raising (emitting) a toast
 To emit a toast, you need to use Butter Toast's `raise` method.
 Raise accepts the toast and its configuration, and returns its id. The id can later be used to dismiss the toast.
 
@@ -129,7 +150,7 @@ The `raise` method accepts an object containing the content of your toast, and c
 | `onClick` | `function` | ` ` | Y | onClick handler. The function will be passed down as a prop to `content`.
 | `pauseOnHover` | `boolean` | `true` | Y | By default, a toast that's being hovered will pause and not dismiss until released. Setting this to `false` will override this behavior.
 
-### Content's props:
+### Toast's Content props:
 * `toastId`: the toast's id
 * `dismiss`: either the native, or the custom dismiss handler
 * `onClick`: if passed, the onClick handler.
@@ -143,7 +164,7 @@ Both `dismiss` and `onClick` recieve the following params:
 * `toast`: The full toast object, containing its component and id
 * `dismiss`: The native dismiss handler that needs to be called when manually dismissing the toast.
 
-## Using `raise`:
+## Accessing `raise`:
 The `raise` method is accessible in two ways:
 
 1. **A static method accessible via `ButterToast`:**

@@ -25,9 +25,11 @@ class Toast extends Toggler {
         }
 
         const timeout = typeof this.remaining === 'number' ? this.remaining : toast.timeout;
+        const add = timeout < 200 ? 200 : 0;
+
         this.clearTimeout();
-        this.timeout = setTimeout(this.close, timeout);
-        this.ends = Date.now() + timeout;
+        this.timeout = setTimeout(this.close, timeout + add);
+        this.ends = Date.now() + timeout + add;
         this.remaining = undefined;
     }
 
