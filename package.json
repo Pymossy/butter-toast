@@ -1,7 +1,7 @@
 {
   "name": "butter-toast",
   "version": "2.0.0-rc",
-  "description": "toggler React Component",
+  "description": "Smooth toast notifications for react apps",
   "main": "./dist/butter-toast.js",
   "scripts": {
     "build": "npm run build-webpack && npm run build-storybook",
@@ -25,7 +25,6 @@
   },
   "homepage": "https://github.com/fiverr/butter-toast#readme",
   "dependencies": {
-    "@fiverr/ui_toggle": "^1.0.3",
     "polished": "^1.9.3",
     "styled-components": "^3.3.3"
   },

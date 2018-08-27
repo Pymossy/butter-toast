@@ -9,7 +9,7 @@ const Ul = styled.ul`
 
     > li {
         position: absolute;
-        transition transform .5s;
+        transition transform .3s;
 
         > .bt-toast {
             opacity: 0;
@@ -24,7 +24,7 @@ const Ul = styled.ul`
 
         > .bt-toast.removed {
             transform: scale(.9);
-            transition: opacity .3s, transform .4s;
+            transition: opacity .3s, transform .3s;
         }
     }
 `;

@@ -64,7 +64,7 @@ storiesOf('Kind::Crisp::With Icon', module)
         start({ kind: 'crisp', scheme: 'red', icon: true });
         return (
             <div>
-                <ButterToast position={{ vertical: POS_TOP, horizontal: POS_CENTER }} />
+                <ButterToast position={{ vertical: POS_BOTTOM, horizontal: POS_CENTER }} />
                 <button onClick={dismissAll}>Dismiss All</button>
             </div>
         );

@@ -5,8 +5,8 @@ module.exports = {
     mode: 'production',
     devtool: 'source-map',
     entry: {
-        'toggler': './src/index.js',
-        'toggler.min': './src/index.js'
+        'butter-toast': './src/index.js',
+        'butter-toast.min': './src/index.js'
     },
     output: {
         filename: '[name].js',

@@ -1,9 +1,8 @@
-import React from 'react';
-import Toggler from '@fiverr/ui_toggle';
+import React, { Component } from 'react';
 import { getRenderable } from '../lib';
 import classNames from 'classnames';
 
-class Toast extends Toggler {
+class Toast extends Component {
 
     state = {
         shown: false
@@ -16,6 +15,12 @@ class Toast extends Toggler {
     componentDidMount() {
         setTimeout(this.open);
     }
+
+    componentWillUnmount() {
+        this.clearTimeout();
+    }
+
+    open = () => this.setState({ isOpen: true }, this.toastDidOpen);
 
     startTimeout = () => {
         const { toast } = this.props;
@@ -44,7 +49,7 @@ class Toast extends Toggler {
 
     calcRemaining = () => this.ends - Date.now();
 
-    togglerDidOpen() {
+    toastDidOpen() {
         const ref = this.toastRef;
         const {
             setHeight, toast
@@ -60,22 +65,20 @@ class Toast extends Toggler {
         });
     }
 
-    togglerWillClose(done) {
-        const ref = this.toastRef;
+    close = () => {
+        const toastRef = this.toastRef;
         this.clearTimeout();
 
+        const remove = () => this.setState({isOpen: false}, this.props.remove);
+
         this.setState({ shown: false, removed: true }, () => {
-            ref.addEventListener('transitionend', function cb(e) {
-                if (e.target === ref) {
-                    ref.removeEventListener(e.type, cb);
-                    done();
+            toastRef.addEventListener('transitionend', function cb(e) {
+                if (e.target === toastRef) {
+                    toastRef.removeEventListener(e.type, cb);
+                    remove();
                 }
             });
         });
-    }
-
-    togglerDidClose() {
-        this.props.remove();
     }
 
     get className() {
@@ -95,7 +98,7 @@ class Toast extends Toggler {
         return dismiss;
     }
 
-    toggleContent() {
+    render() {
         const { dismiss, toast, pauseOnHover, position, ...props } = this.props;
         const { shown, removed } = this.state;
 

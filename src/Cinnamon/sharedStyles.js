@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { POS_TOP } from '../ButterToast/styles';
 import {
     $grey_300,
     $grey_500
@@ -18,7 +19,7 @@ const Base = styled.div`
 
     > span {
         flex: 1;
-        padding: 10px ${({dismissible}) => dismissible ? '45' : '10' }px 10px ${({ hasIcon }) => hasIcon ? '50' : '10'}px;
+        padding: 10px ${({ dismissible }) => dismissible ? '45' : '10'}px 10px ${({ hasIcon }) => hasIcon ? '50' : '10'}px;
     }
 
     .btn-dismiss {
@@ -30,9 +31,12 @@ const Base = styled.div`
     }
 
     @keyframes showIcon {
-        0% { transform: translateY(-100%); opacity: 0;}
-        60% { transform: opacity: 1;}
-        100% { transform: translateY(0); opacity: 1;}
+        ${({ position = {} }) => {
+            const prefix = position.vertical === POS_TOP ? '-' : '';
+            return `0% { transform: translateY(${prefix}100%); opacity: 0;}`
+        }}
+        60% { transform: opacity: 1; }
+        100% { transform: translateY(0); opacity: 1; }
     }
 
     .bt-icon {
@@ -45,7 +49,7 @@ const Base = styled.div`
         justify-content: center;
         align-items: center;
         position: absolute;
-        animation: showIcon .4s ease 0s forwards;
+        animation: showIcon .5s ease 0s forwards;
     }
 `;
 
