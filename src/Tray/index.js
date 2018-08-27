@@ -4,6 +4,7 @@ import { Ul, Li } from './styles';
 import { POS_BOTTOM } from '../ButterToast/styles';
 import Toast from '../Toast';
 import { CUSTOM_EVENT_NAME } from '../ButterToast';
+import { ulStyle, liStyle } from './styles';
 
 class Tray extends Component {
 
@@ -102,7 +103,7 @@ class Tray extends Component {
         let offset = 0;
 
         return (
-            <Ul>
+            <ul style={ulStyle}>
                 {toasts.map((toast) => {
                     if (!toast) { return null; }
 
@@ -116,19 +117,20 @@ class Tray extends Component {
                         currentOffset = -currentOffset - height;
                     }
 
+                    const style = liStyle({ offset: currentOffset, spacing, position, height: toast.height });
+
                     return (
-                        <Li key={toast.id} offset={currentOffset} spacing={spacing} position={position} height={height}>
+                        <li key={toast.id} style={style}>
                             <Toast dismiss={() => this.dismiss(toast.id)}
                                 remove={() => this.remove(toast.id)}
                                 setHeight={this.setHeight}
                                 position={position}
-                                height={height}
                                 ref={(ref) => this.createToastRef(toast.id, ref)}
                                 toast={toast}/>
-                        </Li>
+                        </li>
                     );
                 })}
-            </Ul>
+            </ul>
         );
     }
 }

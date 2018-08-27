@@ -6,7 +6,9 @@ module.exports = {
     devtool: 'source-map',
     entry: {
         'butter-toast': './src/index.js',
-        'butter-toast.min': './src/index.js'
+        'butter-toast.min': './src/index.js',
+        'butter-toast-lean': './src/ButterToast/index.js',
+        'butter-toast-lean.min': './src/ButterToast/index.js',
     },
     output: {
         filename: '[name].js',

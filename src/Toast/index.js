@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getRenderable } from '../lib';
+import { toastStyle } from './style';
 import classNames from 'classnames';
 
 class Toast extends Component {
@@ -106,6 +107,7 @@ class Toast extends Component {
             <div ref={this.createRef}
                 onMouseEnter={() => pauseOnHover && this.clearTimeout()}
                 onMouseLeave={() => pauseOnHover && this.startTimeout()}
+                style={toastStyle({shown, removed})}
                 className={this.className}>
                 {getRenderable(toast.content, {
                     toastId: toast.id,

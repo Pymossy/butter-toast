@@ -124,10 +124,10 @@ ButterToast.propTypes = {
     renderInContext: PropTypes.bool,
     className: PropTypes.string,
     namespace: PropTypes.string,
-    // position: PropTypes.objectOf({
-    //     vertical: PropTypes.oneOf([POS_TOP, POS_BOTTOM]),
-    //     horizontal: PropTypes.oneOf([POS_LEFT, POS_RIGHT, POS_CENTER])
-    // }),
+    position: PropTypes.shape({
+        vertical: PropTypes.oneOf([POS_TOP, POS_BOTTOM]),
+        horizontal: PropTypes.oneOf([POS_LEFT, POS_RIGHT, POS_CENTER])
+    }),
     timout: PropTypes.number,
     spacing: PropTypes.number
 };
