@@ -13,6 +13,7 @@ class Tray extends Component {
         this.state = { toasts: [] };
         this.toasts = {};
 
+        this.onDismissButterToast = this.onDismissButterToast.bind(this);
         this.onButterToast = this.onButterToast.bind(this);
         this.setToastHeight = this.setToastHeight.bind(this);
         this.onMouseEnter = this.onMouseEnter.bind(this);
@@ -26,12 +27,14 @@ class Tray extends Component {
 
     componentDidMount() {
         window.addEventListener('ButterToast', this.onButterToast);
+        window.addEventListener('DismissButterToast', this.onDismissButterToast);
     }
 
     componentWillUnmount() {
         Object.values(this.debouncer).forEach((item) => item.cancel());
         delete this.debouncer;
         window.removeEventListener('ButterToast', this.onButterToast);
+        window.removeEventListener('DismissButterToast', this.onDismissButterToast);
     }
 
     setToastHeight(toastId, height = 0) {
@@ -98,6 +101,9 @@ class Tray extends Component {
 
             nextState.toasts[index].shown = true;
             nextState.toasts[index].height = this.toasts[toastId].height;
+            if (typeof this.props.toastShowed === 'function'){
+                this.props.toastShowed(toastId);
+            }
             return nextState;
         });
     }
@@ -115,6 +121,9 @@ class Tray extends Component {
             }
 
             nextState.toasts[index].shown = false;
+            if (typeof this.props.toastHidden === 'function'){
+                this.props.toastHidden(toastId);
+            }
             return nextState;
         });
     }
@@ -124,6 +133,29 @@ class Tray extends Component {
             return this.toasts[toastId].awaitsRemoval = true;
         }
         this.setState((prevState) => ({ toasts: prevState.toasts.filter((toast) => toast.toastId !== toastId)}));
+    }
+
+    onDismissButterToast(e){
+        const criteria = e.detail;
+
+        if (!criteria.name && !criteria.toastId){
+            this.state.toasts.forEach((item) => this.removeToast(item.toastId, true));
+            return;
+        }
+
+        if (!criteria.name && criteria.toastId){
+            const index = this.state.toasts.findIndex((toast) => toast.toastId === criteria.toastId);
+            if (index >= 0){
+                this.removeToast(this.state.toasts[index].toastId, true);
+            }
+            return;
+        }
+
+        if (criteria.name && !criteria.toastId){
+            if (this.props.name === criteria.name){
+                this.state.toasts.forEach((item) => this.removeToast(item.toastId, true));
+            }
+        }
     }
 
     onButterToast(e) {

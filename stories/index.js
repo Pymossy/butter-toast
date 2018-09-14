@@ -1,9 +1,12 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { storiesOf, action } from '@storybook/react';
+import { Button } from '@storybook/components';
+import addons from '@storybook/addons';
 import { quotes, icons, rand } from './helpers';
 import ButterToast, { CinnamonSugar } from '../src';
 import './style.scss';
 
+let toasts = [];
 function raise(e, options = {}) {
     e.preventDefault();
 
@@ -18,10 +21,25 @@ function raise(e, options = {}) {
     ButterToast.raise(toast, options);
 }
 
-function raiseRandomTimeout(e) {
-    raise(e, {toastTimeout: (Math.round(Math.random()*7000) + 3000), name: 'slim t6'});
+function raiseRandomTimeout(e, name) {
+    raise(e, {toastTimeout: (Math.round(Math.random()*7000) + 3000), name});
 }
 
+function toastShowed(toastId){
+    toasts.push(toastId);
+}
+
+function toastHidden(toastId){
+    toasts = toasts.filter((id) => id !== toastId);
+}
+function dismissWithName(e, name){
+    e.preventDefault();
+    ButterToast.dismiss({name});
+}
+function dismissAll(e){
+    e.preventDefault();
+    ButterToast.dismiss();
+}
 function raiseSticky(e) {
     raise(e, {
         sticky: true,
@@ -70,7 +88,17 @@ storiesOf('Toast', module) // eslint-disable-line no-undef
     ))
     .add('bottom-right: Random Timeout', () => (
         <div>
-            <ButterToast name="slim t6" renderInContext={true}/>
-            <a href="#!" onClick={raiseRandomTimeout}>Raise a toast!</a>
+            <ButterToast name="slim t6" renderInContext={true} toastShowed={toastShowed} toastHidden={toastHidden}/>
+            <ButterToast name="slim t16" renderInContext={true}/>
+            <div><a href="#!" onClick={(e) => raiseRandomTimeout(e, 'slim t6')}>Raise a toast!</a></div>
+            <div><a href="#!" onClick={(e) => raiseRandomTimeout(e, 'slim t16')}>Raise a toast with diffrent name!</a></div>
+            <div className="dismiss-section">
+                <Button onClick={dismissAll}>
+                    Dismiss All
+                </Button>
+                <Button onClick={(e) => dismissWithName(e, 'slim t6')}>
+                    Dismiss With Name (slim t6)
+                </Button>
+            </div>
         </div>
     ));

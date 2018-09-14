@@ -6,7 +6,13 @@ import { generateClassName, findByClassName } from './helpers';
 import Tray from '../Tray';
 
 class ButterToast extends Component {
+    static dismiss(criteria = {}){
+        const dismissToast = new CustomEvent('DismissButterToast', {
+            detail: Object.assign({}, criteria)
+        });
 
+        return window.dispatchEvent(dismissToast);
+    }
     static raise(payload = {}, options = {}) {
         const toast = new CustomEvent('ButterToast', {
             detail: Object.assign({}, payload, options)
